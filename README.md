@@ -1,16 +1,41 @@
-# React + Vite
+## User Management Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+https://user-dashboard-teal-five.vercel.app/
 
-Currently, two official plugins are available:
+react-приложение для управления данными пользователей с интерактивной таблицей. пользователи могут просматривать, сортировать, выбирать, добавлять и удалять записи. приложение получает тестовые данные с dummyjson.com (https://dummyjson.com/docs) и сохраняет изменения локально через localStorage
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+стэк:
+- React 18 (функциональные компоненты, хуки)
+- CSS (модули, грид, флексбокс)
+- Fetch API 
+- localStorage
 
-## React Compiler
+### функции
+реализованные:
+- таблица пользователей с колонками: имя, фамилия, отчество, возраст, пол, телефон, email, страна, город
+- сортировка по клику на заголовок (по возрастанию, по убыванию, без сортировки)
+- выбор строк через чекбоксы (индивидуально или сразу все)
+- удаление выбранных пользователей (имитация делит-запросов, локальное обновление списка)
+- добавление нового пользователя через модальное окно с формой (пост-запрос)
+- детальный просмотр информации о пользователе при клике на строку (модальное окно с доп инфой)
+- обработка ошибок и состояния загрузки.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+в разработке (не задеплоены):
+- пагинация
+- все изменения сохраняются в localStorage и восстанавливаются после перезагрузки страницы
+- drag-and-drop
+- фильтрация
+- ресайз колонок
+- даркмод
 
-## Expanding the ESLint configuration
+<img width="2261" height="1355" alt="image" src="https://github.com/user-attachments/assets/fc53f506-154b-4d38-a4f6-e135fa00f319" />
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+<img width="1129" height="1022" alt="image" src="https://github.com/user-attachments/assets/b145b331-1c3a-4c5f-adef-77205871da02" />
+
+<img width="2188" height="763" alt="image" src="https://github.com/user-attachments/assets/a2cde723-f110-4834-b3a7-7f9cd192b19d" />
+
+<img width="1096" height="627" alt="image" src="https://github.com/user-attachments/assets/951d6f55-7d98-42e0-908c-5d1f168e18a1" />
+
+<img width="995" height="1124" alt="image" src="https://github.com/user-attachments/assets/89a8074e-4d9b-4e6e-93f0-2e02f57110f7" />
+
+
