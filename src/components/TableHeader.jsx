@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TableHeader({selectedIds, isAllSelected, onToggleAll, sortConfig, onSort}) {
+export default function TableHeader({onAddClick, onReload, onDeleteSelected, selectedIds, isAllSelected, onToggleAll, sortConfig, onSort}) {
 
     const columns = [
         { label: 'First Name', sortKey: 'firstName' },
@@ -28,12 +28,15 @@ export default function TableHeader({selectedIds, isAllSelected, onToggleAll, so
                     {selectedIds.length > 0 ? 
                     <div className="remove-block">
                         <p>Remove {isAllSelected ? 'all' : selectedIds.length} {selectedIds.length === 1 ? 'item' : 'items'} ? </p> 
-                        <button className="remove-btn"><img src="public/trash-icon.svg" alt="remove button" /></button>
+                        <button className="remove-btn" onClick={onDeleteSelected}><img src="public/trash-icon.svg" alt="remove button" /></button>
                     </div>
                     : ''}
                 </div>
-
-                <button className='add-new-user-btn'>+ Add new user</button>
+                <div className='right-block'>
+                    <button onClick={onReload} className='reload-page-btn'><img src="public/reload-page.svg" alt="" /></button>
+                    <button onClick={onAddClick} className='add-new-user-btn'>+ Add new user</button>
+                </div>
+                    
             </div>
 
             <div className="header-row">

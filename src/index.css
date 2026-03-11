@@ -19,7 +19,7 @@ body {
     padding: 15px;
 }
 
-.left-block {
+.left-block, .right-block {
     display: flex;
     gap: 10px;
     align-items: center;
@@ -55,25 +55,25 @@ body {
     transition: all ease 0.3ms;
 }
 
-.filter-btn, .add-new-user-btn, .remove-btn {
+.filter-btn, .add-new-user-btn, .remove-btn, .reload-page-btn {
     border-radius: 6px;
     cursor: pointer;
 }
 
-.filter-btn, .remove-btn {
+.filter-btn, .remove-btn, .reload-page-btn {
     padding: 8px 12px;
     background-color: white;
     border: 2px solid #ababab;
     transition: all ease 0.3ms;
 }
 
-.filter-btn:hover, .remove-btn:hover {
+.filter-btn:hover, .remove-btn:hover, .reload-page-btn:hover {
     background-color: rgb(232, 232, 232);
     transform: scaleY(1.02);
     transition: all ease 0.3ms;
 }
 
-.remove-btn img {
+.remove-btn img, .reload-page-btn img {
     width: 16px;
 }
 
@@ -87,7 +87,7 @@ body {
     background-color: #2264E5;
     border: none;
     box-shadow: 1px 1px 4px #2264E5;
-    padding: 6px 12px;
+    padding: 8px 12px;
     transition: all ease 0.3ms;
 }
 

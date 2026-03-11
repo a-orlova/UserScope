@@ -93,3 +93,35 @@
     opacity: 0;
     pointer-events: none;
 }
+
+/* сообщение при удалении всех пользователей */
+
+.empty-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.empty-message button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #14804A;
+    font-weight: bold;
+    background-color: #E1FCEF;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    width: 200px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.empty-message button:hover {
+    border: 2px solid #14804A;
+    background-color: #c6e9d8;
+}
+
+.empty-message img {
+    width: 20px;
+}
