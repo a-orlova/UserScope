@@ -1,6 +1,7 @@
 import React from 'react'
 import TableHeader from './TableHeader'
 import TableRow from './TableRow'
+import Modal from './Modal/Modal'
 
 export default function Table() {
 
@@ -8,6 +9,7 @@ export default function Table() {
     const [sortConfig, setSortConfig] = React.useState({key: null, direction: null})
 
     const [selectedIds, setSelectedIds] = React.useState([])
+    const [modalUser, setModalUser] = React.useState(null)
 
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
@@ -21,6 +23,10 @@ export default function Table() {
         else{
             setSelectedIds(usersInfo.map(user => user.id))
         }
+    }
+
+    function handleRowClick(user) {
+        setModalUser(user)
     }
 
     function handleToggleRow(id) {
@@ -104,10 +110,12 @@ export default function Table() {
             selectedIds={selectedIds}
             />
             {usersInfo.map(user => (<TableRow 
+                                    onRowClick={() => handleRowClick(user)}
                                     onToggle={() => handleToggleRow(user.id)} 
                                     isSelected={selectedIds.includes(user.id)} 
                                     key={user.id} 
                                     userInfo={user}/>))}
+            {modalUser && <Modal userInfo={modalUser} onClose={() => setModalUser(null)}/>}
         </div>
     )
 }

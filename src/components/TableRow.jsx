@@ -1,14 +1,15 @@
 import React from 'react'
 import TableCell from './TableCell'
 
-export default function TableRow({onToggle, isSelected, userInfo}) {
+export default function TableRow({onRowClick, onToggle, isSelected, userInfo}) {
 
     return (
-        <div className={`user-table-row ${isSelected ? 'selected' : ''}`}>
+        <div onClick={onRowClick} className={`user-table-row ${isSelected ? 'selected' : ''}`}>
             <input type="checkbox" 
             id={userInfo.id} 
             checked={isSelected} 
             onChange={onToggle}
+            onClick={(e) => e.stopPropagation()}
             />
             <TableCell item={userInfo?.firstName || '#'}/>
             <TableCell item={userInfo?.lastName || '#'}/>
