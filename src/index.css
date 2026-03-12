@@ -31,9 +31,12 @@ body {
     gap: 8px;
     align-items: center;
     padding: 8px;
-    border: 1px solid #ccc;
     border-top: none;
     color: #2E3B52;
+}
+
+.user-table-row {
+    border: 1px solid #ccc;
 }
 
 #search-icon, #filter-icon {
