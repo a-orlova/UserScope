@@ -11,15 +11,15 @@ export default function TableRow({onRowClick, onToggle, isSelected, userInfo}) {
             onChange={onToggle}
             onClick={(e) => e.stopPropagation()}
             />
-            <TableCell item={userInfo?.firstName || '#'}/>
-            <TableCell item={userInfo?.lastName || '#'}/>
-            <TableCell item={userInfo?.maidenName || '#'}/>
-            <TableCell item={userInfo?.age || '#'}/>
-            <TableCell item={userInfo?.gender || '#'}/>
-            <TableCell item={userInfo?.phone || '#'}/>
-            <TableCell item={userInfo?.email || '#'}/>
-            <TableCell item={userInfo?.address?.country || '#'}/>
-            <TableCell item={userInfo?.address?.city || '#'}/>
+            <TableCell item={userInfo?.firstName || '-'}/>
+            <TableCell item={userInfo?.lastName || '-'}/>
+            <TableCell item={userInfo?.maidenName || '-'}/>
+            <TableCell item={userInfo?.age || '-'}/>
+            <TableCell item={userInfo?.gender || '-'}/>
+            <TableCell item={userInfo?.phone || '-'}/>
+            <TableCell item={userInfo?.email || '-'}/>
+            <TableCell item={userInfo?.address?.country || '-'}/>
+            <TableCell item={userInfo?.address?.city || '-'}/>
         </div>
     )
 }

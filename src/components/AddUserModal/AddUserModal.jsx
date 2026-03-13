@@ -8,6 +8,7 @@ export default function AddUserModal({ isOpen, onClose, onAdd }) {
                                     lastName: '',
                                     maidenName: '',
                                     age: '',
+                                    birthDate: '',
                                     gender: 'male',
                                     phone: '',
                                     email: '',
@@ -51,12 +52,23 @@ export default function AddUserModal({ isOpen, onClose, onAdd }) {
 
     function handleSubmit(e) {
         e.preventDefault()
+
+        const trimmedUniversity = formData.university.trim()
+
         const newUser = {
             ...formData,
             age: Number(formData.age),
-            height: Number(formData.height),
-            weight: Number(formData.weight)
+            birthDate: formData.birthDate,
+            height: formData.height ? Number(formData.height) : null,
+            weight: formData.weight ? Number(formData.weight) : null,
+            university: trimmedUniversity || '-',
+            address: {
+                ...formData.address,
+                city: formData.city.trim(),
+                country: formData.country.trim()
+            }
         }
+
         onAdd(newUser)
         handleClose()
     }
@@ -82,6 +94,16 @@ export default function AddUserModal({ isOpen, onClose, onAdd }) {
                 <div>
                     <label>Age *</label>
                     <input type="number" name="age" value={formData.age} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>Date of birth *</label>
+                    <input
+                        type="date"
+                        name="birthDate"
+                        value={formData.birthDate}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div>
                     <label>Gender</label>

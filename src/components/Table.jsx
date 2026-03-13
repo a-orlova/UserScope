@@ -27,6 +27,28 @@ export default function Table() {
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
 
+    const [searchQuery, setSearchQuery] = React.useState('')
+
+    const filteredUsers = React.useMemo(() => {
+
+        if (!searchQuery.trim()) return usersInfo
+
+        const q = searchQuery.toLowerCase()
+        return usersInfo.filter(user => {
+          const values = [
+            user.firstName,
+            user.lastName,
+            user.maidenName,
+            user.phone,
+            user.email,
+            user.address?.country,
+            user.address?.city,
+          ].filter(Boolean)
+
+          return values.some(v => String(v).toLowerCase().includes(q))
+        })
+      }, [usersInfo, searchQuery])
+
     function sortUsers(users, config) {
         if (!config || !config.key || !config.direction) return users
 
@@ -186,28 +208,44 @@ export default function Table() {
     return (
         <div className="table">
             <TableHeader 
-            onAddClick={handleOpenAddModal}
-            onReload={handleReload}
-            onDeleteSelected={handleDeleteSelected}
-            isAllSelected={isAllSelected}
-            onToggleAll={onToggleAll} 
-            sortConfig={sortConfig} 
-            onSort={handleSort}
-            selectedIds={selectedIds}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                onAddClick={handleOpenAddModal}
+                onReload={handleReload}
+                onDeleteSelected={handleDeleteSelected}
+                isAllSelected={isAllSelected}
+                onToggleAll={onToggleAll} 
+                sortConfig={sortConfig} 
+                onSort={handleSort}
+                selectedIds={selectedIds}
             />
-            {usersInfo.length != 0 ? usersInfo.map(user => (<TableRow 
-                                    onRowClick={() => handleRowClick(user)}
-                                    onToggle={() => handleToggleRow(user.id)} 
-                                    isSelected={selectedIds.includes(user.id)} 
-                                    key={user.id} 
-                                    userInfo={user}/>))
-            : <div className="empty-message">
-                <h2>Right now there is no users in database.</h2>
-                <button onClick={loadUsers}>
-                    Fetch new users 
-                    <i className="fa-solid fa-download" style={{color: '#d12953'}}></i>
-                </button>
-            </div>}
+            {usersInfo.length === 0 ? (
+                <div className="empty-message">
+                    <h2>Right now there is no users in database.</h2>
+                    <button onClick={loadUsers}>
+                        Fetch new users 
+                        <i className="fa-solid fa-download" style={{color: '#d12953'}}></i>
+                    </button>
+                </div>
+            ) : filteredUsers.length === 0 && searchQuery.trim() ? (
+                <div className="empty-message">
+                    <h2>No users found for this search.</h2>
+                    <button onClick={() => setSearchQuery('')}>
+                        Clear search
+                        <i className="fa-solid fa-xmark" style={{color: '#d12953', marginLeft: '8px'}}></i>
+                    </button>
+                </div>
+            ) : (
+                filteredUsers.map(user => (
+                    <TableRow 
+                        onRowClick={() => handleRowClick(user)}
+                        onToggle={() => handleToggleRow(user.id)} 
+                        isSelected={selectedIds.includes(user.id)} 
+                        key={user.id} 
+                        userInfo={user}
+                    />
+                ))
+            )}
             {modalUser && <Modal userInfo={modalUser} onClose={() => setModalUser(null)}/>}
 
             {isAddModalOpen && (<AddUserModal

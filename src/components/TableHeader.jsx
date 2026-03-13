@@ -1,6 +1,15 @@
 import React from 'react'
 
-export default function TableHeader({onAddClick, onReload, onDeleteSelected, selectedIds, isAllSelected, onToggleAll, sortConfig, onSort}) {
+export default function TableHeader({onAddClick, 
+                                    onReload, 
+                                    onDeleteSelected, 
+                                    selectedIds, 
+                                    isAllSelected, 
+                                    onToggleAll, 
+                                    sortConfig, 
+                                    onSort,
+                                    searchQuery,
+                                    onSearchChange}) {
 
     const columns = [
         { label: 'First Name', sortKey: 'firstName' },
@@ -14,6 +23,15 @@ export default function TableHeader({onAddClick, onReload, onDeleteSelected, sel
         { label: 'City'}
     ]
 
+    function handleSearch(e) {
+        const value = e.target.value
+        onSearchChange(value)
+    }
+
+    // const filteredUsers = usersInfo.filter(user => {
+    //     return Object.values(user).some(value => value.toString().toLowerCase().includes(searchQuery.toLowerCase()))
+    // })
+
     return (
        <div className='table-header'>
             <div className="functional-block">
@@ -24,7 +42,11 @@ export default function TableHeader({onAddClick, onReload, onDeleteSelected, sel
                     
                     <div className="search-field">
                         <i className="fa-solid fa-magnifying-glass" id="search-icon" aria-hidden="true"></i>
-                        <input type="search" placeholder='Search...'/>
+                        <input type="search" 
+                               placeholder='Search...'
+                               value={searchQuery}
+                               onChange={handleSearch}
+                            />
                     </div>
 
                     {selectedIds.length > 0 ? 
