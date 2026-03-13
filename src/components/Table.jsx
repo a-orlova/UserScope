@@ -29,25 +29,62 @@ export default function Table() {
 
     const [searchQuery, setSearchQuery] = React.useState('')
 
+    const [femFltr, setFemFltr] = React.useState(false)
+
+    function handleFemaleFilter() {
+        setFemFltr(prev => !prev)
+    }
+
+    const [maleFltr, setMaleFltr] = React.useState(false)
+
+    function handleMaleFilter() {
+        setMaleFltr(prev => !prev)
+    }
+
+    const [webFltr, setWebFltr] = React.useState(false)
+
+    function handleWebFilter() {
+        setWebFltr(prev => !prev)
+    }
+
     const filteredUsers = React.useMemo(() => {
 
-        if (!searchQuery.trim()) return usersInfo
+        let result = usersInfo
 
-        const q = searchQuery.toLowerCase()
-        return usersInfo.filter(user => {
-          const values = [
-            user.firstName,
-            user.lastName,
-            user.maidenName,
-            user.phone,
-            user.email,
-            user.address?.country,
-            user.address?.city,
-          ].filter(Boolean)
+        if (femFltr) {
+            result = result.filter(user => user.gender === 'female')
+        }
 
-          return values.some(v => String(v).toLowerCase().includes(q))
-        })
-      }, [usersInfo, searchQuery])
+        if (maleFltr) {
+            result = result.filter(user => user.gender === 'male')
+        }
+
+        if (webFltr) {
+            result = result.filter(user => user.company.title === 'Web Developer')
+        }
+
+        if (searchQuery.trim()) {
+
+            const q = searchQuery.toLowerCase()
+
+            return result.filter(user => {
+                const values = [
+                    user.firstName,
+                    user.lastName,
+                    user.maidenName,
+                    user.phone,
+                    user.email,
+                    user.address?.country,
+                    user.address?.city,
+                ].filter(Boolean)
+
+                return values.some(v => String(v).toLowerCase().includes(q))
+            })
+        }
+
+        return result
+
+      }, [usersInfo, searchQuery, femFltr, maleFltr, webFltr])
 
     function sortUsers(users, config) {
         if (!config || !config.key || !config.direction) return users
@@ -116,7 +153,7 @@ export default function Table() {
         setError(null)
 
         try {
-            const response = await fetch('https://dummyjson.com/users')
+            const response = await fetch('https://dummyjson.com/users?limit=100')
             if(!response.ok) {
                 throw new Error('произошла ошибка загрузки!')
             }
@@ -208,15 +245,24 @@ export default function Table() {
     return (
         <div className="table">
             <TableHeader 
-                searchQuery={searchQuery}
+                femFltr={femFltr}
+                maleFltr={maleFltr}
+                webFltr={webFltr}
+
+                onFemaleFilter={handleFemaleFilter}
+                onMaleFilter={handleMaleFilter}
+                onWebFilter={handleWebFilter}
+
+                onSort={handleSort}
                 onSearchChange={setSearchQuery}
                 onAddClick={handleOpenAddModal}
                 onReload={handleReload}
+                onToggleAll={onToggleAll} 
                 onDeleteSelected={handleDeleteSelected}
                 isAllSelected={isAllSelected}
-                onToggleAll={onToggleAll} 
+
+                searchQuery={searchQuery}
                 sortConfig={sortConfig} 
-                onSort={handleSort}
                 selectedIds={selectedIds}
             />
             {usersInfo.length === 0 ? (

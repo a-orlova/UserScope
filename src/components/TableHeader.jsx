@@ -9,12 +9,18 @@ export default function TableHeader({onAddClick,
                                     sortConfig, 
                                     onSort,
                                     searchQuery,
-                                    onSearchChange}) {
+                                    onSearchChange,
+                                    onFemaleFilter,
+                                    onMaleFilter,
+                                    onWebFilter,
+                                    femFltr,
+                                    maleFltr,
+                                    webFltr}) {
 
     const columns = [
         { label: 'First Name', sortKey: 'firstName' },
         { label: 'Last Name', sortKey: 'lastName' },
-        { label: 'Maiden Name'},
+        { label: 'Career'},
         { label: 'Age', sortKey: 'age' },
         { label: 'Gender', sortKey: 'gender' },
         { label: 'Phone'},
@@ -36,9 +42,9 @@ export default function TableHeader({onAddClick,
        <div className='table-header'>
             <div className="functional-block">
                 <div className="left-block">
-                    <button className="filter-btn">
+                    {/* <button className="filter-btn">
                         <i className="fa-solid fa-filter" id="filter-icon" aria-hidden="true"></i>
-                    </button>
+                    </button> */}
                     
                     <div className="search-field">
                         <i className="fa-solid fa-magnifying-glass" id="search-icon" aria-hidden="true"></i>
@@ -48,6 +54,18 @@ export default function TableHeader({onAddClick,
                                onChange={handleSearch}
                             />
                     </div>
+
+                    <button className={femFltr ? "filter-btn fltr active" : "filter-btn fltr"}  onClick={onFemaleFilter}>
+                        Female <i className="fa-solid fa-filter" id="filter-icon" aria-hidden="true"></i>
+                    </button>
+
+                    <button className={maleFltr ? "filter-btn fltr active" : "filter-btn fltr"} onClick={onMaleFilter}>
+                        Male <i className="fa-solid fa-filter" id="filter-icon" aria-hidden="true"></i>
+                    </button>
+
+                    <button className={webFltr ? "filter-btn fltr active" : "filter-btn fltr"}  onClick={onWebFilter}>
+                        Web developer <i className="fa-solid fa-filter" id="filter-icon" aria-hidden="true"></i>
+                    </button>
 
                     {selectedIds.length > 0 ? 
                     <div className="remove-block">

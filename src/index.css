@@ -11,6 +11,7 @@ body {
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
+    font-size: 14px;
 }
 
 .functional-block {
@@ -27,7 +28,7 @@ body {
 
 .header-row, .user-table-row {
     display: grid;
-    grid-template-columns: 50px 1.5fr 1.5fr 1.5fr 1fr 1fr 2fr 3fr 1.3fr 1.2fr;
+    grid-template-columns: 50px 1.5fr 1.5fr 2fr 1fr 1fr 2fr 3fr 1.3fr 1.2fr;
     gap: 8px;
     align-items: center;
     padding: 8px;
@@ -58,7 +59,6 @@ body {
 .search-field {
     display: flex;
     align-items: center;
-    border: 1px solid black;
     /* padding: 6px 12px; */
     border-radius: 6px;
     background-color: white;
@@ -74,12 +74,15 @@ body {
 
 .filter-btn, .add-new-user-btn, .remove-btn, .reload-page-btn {
     border-radius: 6px;
+    gap: 5px;
+    /* font-weight: bolder; */
     cursor: pointer;
     height: 40px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
+
 
 .filter-btn, .remove-btn, .reload-page-btn {
     padding: 0 12px;
@@ -92,6 +95,15 @@ body {
     background-color: rgb(232, 232, 232);
     transform: scaleY(1.02);
     transition: all ease 0.3ms;
+}
+
+.fltr {
+    font-weight: bolder;
+    color: #2E3B52;
+}
+
+.active {
+    border: 2px solid #2E3B52;;
 }
 
 /* размеры и цвета иконок кнопок */
@@ -201,3 +213,7 @@ body {
     margin-left: 4px;
 }
 
+.user-table-row:last-of-type {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}

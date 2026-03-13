@@ -13,7 +13,7 @@ export default function TableRow({onRowClick, onToggle, isSelected, userInfo}) {
             />
             <TableCell item={userInfo?.firstName || '-'}/>
             <TableCell item={userInfo?.lastName || '-'}/>
-            <TableCell item={userInfo?.maidenName || '-'}/>
+            <TableCell item={userInfo?.company?.title || '-'}/>
             <TableCell item={userInfo?.age || '-'}/>
             <TableCell item={userInfo?.gender || '-'}/>
             <TableCell item={userInfo?.phone || '-'}/>
