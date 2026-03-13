@@ -18,22 +18,28 @@ export default function TableHeader({onAddClick, onReload, onDeleteSelected, sel
        <div className='table-header'>
             <div className="functional-block">
                 <div className="left-block">
-                    <button className="filter-btn"><img src="public/filter-icon.svg" alt="filter button" id='filter-icon'/></button>
+                    <button className="filter-btn">
+                        <i className="fa-solid fa-filter" id="filter-icon" aria-hidden="true"></i>
+                    </button>
                     
                     <div className="search-field">
-                        <img src="public/search-input-icon.svg" alt="search icon" id='search-icon'/>
+                        <i className="fa-solid fa-magnifying-glass" id="search-icon" aria-hidden="true"></i>
                         <input type="search" placeholder='Search...'/>
                     </div>
 
                     {selectedIds.length > 0 ? 
                     <div className="remove-block">
                         <p>Remove {isAllSelected ? 'all' : selectedIds.length} {selectedIds.length === 1 ? 'item' : 'items'} ? </p> 
-                        <button className="remove-btn" onClick={onDeleteSelected}><img src="public/trash-icon.svg" alt="remove button" /></button>
+                        <button className="remove-btn" onClick={onDeleteSelected}>
+                            <i className="fa-solid fa-trash" aria-hidden="true"></i>
+                        </button>
                     </div>
                     : ''}
                 </div>
                 <div className='right-block'>
-                    <button onClick={onReload} className='reload-page-btn'><img src="public/reload-page.svg" alt="" /></button>
+                    <button onClick={onReload} className='reload-page-btn'>
+                        <i className="fa-solid fa-rotate-right" aria-hidden="true"></i>
+                    </button>
                     <button onClick={onAddClick} className='add-new-user-btn'>+ Add new user</button>
                 </div>
                     
@@ -50,10 +56,17 @@ export default function TableHeader({onAddClick, onReload, onDeleteSelected, sel
                     <span>{column.label.toUpperCase()}</span>
                     {column.sortKey && 
                     (<span className='sort-icon'>
-                        {sortConfig.key === column.sortKey ? (sortConfig.direction === 'asc' ? <img src="public/sort-up.svg" alt="sort asc" />
-                                                            : sortConfig.direction === 'desc' ? <img src="public/sort-down.svg" alt="sort desc" /> 
-                                                            : <img src="public/sorting.svg" alt="sort asc" />) 
-                        : <img src="public/sorting.svg" alt="sort button" />}
+                        {sortConfig.key === column.sortKey ? (
+                            sortConfig.direction === 'asc' ? (
+                                <i className="fa-solid fa-sort-up" aria-hidden="true"></i>
+                            ) : sortConfig.direction === 'desc' ? (
+                                <i className="fa-solid fa-sort-down" aria-hidden="true"></i>
+                            ) : (
+                                <i className="fa-solid fa-sort" aria-hidden="true"></i>
+                            )
+                        ) : (
+                            <i className="fa-solid fa-sort" aria-hidden="true"></i>
+                        )}
                      </span>)}
                     </button>
                 ))}

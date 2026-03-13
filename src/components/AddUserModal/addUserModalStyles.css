@@ -69,17 +69,31 @@ input, select {
 }
 
 .modal-actions button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #2264E5;
+    border: none;
+    box-shadow: 1px 1px 4px #2264E5;
+    padding: 0 12px;
+    transition: all ease 0.3ms;
+    font-weight: bolder;
+}
+
+.modal-actions button:hover {
+    background-color: #1952c5;
+    transform: scaleY(1.02);
+    transition: all ease 0.3ms;
 }
 
 .modal-actions button[type="button"] {
     background: #ccc;
-}
-
-.modal-actions button[type="submit"] {
-    background: #2264E5;
-    color: white;
+    color: #464F60;
+    border: 2px solid #ababab;
+    box-shadow: none;
+    transition: none;
 }

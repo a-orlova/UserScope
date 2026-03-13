@@ -6,10 +6,20 @@ import AddUserModal from './AddUserModal/AddUserModal'
 
 export default function Table() {
 
-    const [usersInfo, setUsersInfo] = React.useState([])
-    const [sortConfig, setSortConfig] = React.useState({key: null, direction: null})
+    const [usersInfo, setUsersInfo] = React.useState(() => {
+        const stored = localStorage.getItem('usersInfo')
+        return stored ? JSON.parse(stored) : []
+    })
 
-    const [selectedIds, setSelectedIds] = React.useState([])
+    const [sortConfig, setSortConfig] = React.useState(() => {
+        const stored = localStorage.getItem('sortConfig')
+        return stored ? JSON.parse(stored) : {key: null, direction: null}
+    })
+
+    const [selectedIds, setSelectedIds] = React.useState(() => {
+        const stored = localStorage.getItem('selectedIds')
+        return stored ? JSON.parse(stored) : []
+    })
     const [modalUser, setModalUser] = React.useState(null)
 
     const [isAddModalOpen, setIsAddModalOpen] = React.useState(false)
@@ -17,14 +27,43 @@ export default function Table() {
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
 
+    function sortUsers(users, config) {
+        if (!config || !config.key || !config.direction) return users
+
+        const sorted = [...users].sort((a, b) => {
+            const aVal = a[config.key]
+            const bVal = b[config.key]
+
+            if (aVal == null && bVal == null) return 0
+            if (aVal == null) return 1
+            if (bVal == null) return -1
+
+            if (typeof aVal === 'number' && typeof bVal === 'number') {
+                return aVal - bVal
+            }
+
+            return String(aVal).localeCompare(String(bVal))
+        })
+
+        return config.direction === 'desc' ? sorted.reverse() : sorted
+    }
+
     const isAllSelected = selectedIds.length === usersInfo.length && usersInfo.length > 0
 
     function onToggleAll() {
         if(isAllSelected) {
-            setSelectedIds([])
+            setSelectedIds(() => {
+                const next = []
+                localStorage.setItem('selectedIds', JSON.stringify(next))
+                return next
+            })
         }
         else{
-            setSelectedIds(usersInfo.map(user => user.id))
+            const allIds = usersInfo.map(user => user.id)
+            setSelectedIds(() => {
+                localStorage.setItem('selectedIds', JSON.stringify(allIds))
+                return allIds
+            })
         }
     }
 
@@ -33,55 +72,36 @@ export default function Table() {
     }
 
     function handleToggleRow(id) {
-        setSelectedIds( prev => ( 
-            prev.includes(id) ?
-            prev.filter(selectedId => selectedId !== id) :
-            [...prev, id]
-        ))
+        setSelectedIds(prev => {
+            const next = prev.includes(id)
+                ? prev.filter(selectedId => selectedId !== id)
+                : [...prev, id]
+            localStorage.setItem('selectedIds', JSON.stringify(next))
+            return next
+        })
     }
 
     function handleDeleteSelected() {
-        const deletedUsers = selectedIds.map(id =>
-            fetch(`https://dummyjson.com/users/${id}`, {
-                method: 'DELETE'
-            })
-            .then(res => {
-                if (!res.ok) throw new Error(`error during deleting user with id = ${id}`)
-                return res.json()
-            })
-        )
-
-        Promise.all(deletedUsers)
-            .then(() => {
-                const updatedUsers = usersInfo.filter(user => !selectedIds.includes(user.id))
-                setUsersInfo(updatedUsers)
-                setSelectedIds([])
-            })
-
+        const updatedUsers = usersInfo.filter(user => !selectedIds.includes(user.id))
+        setUsersInfo(updatedUsers)
+        localStorage.setItem('usersInfo', JSON.stringify(updatedUsers))
+        setSelectedIds([])
+        localStorage.setItem('selectedIds', JSON.stringify([]))
     }
 
-    const loadUsers = async (sortBy, order) => {
+    const loadUsers = async (config = sortConfig) => {
         setLoading(true)
         setError(null)
 
         try {
-            let url = 'https://dummyjson.com/users'
-            const params = new URLSearchParams
-
-            if (sortBy && order) {
-                params.append('sortBy', sortBy)
-                params.append('order', order)
-            }
-
-            if (params.toString()) {
-                url += `?${params.toString()}`
-            }
-            const response = await fetch(url)
+            const response = await fetch('https://dummyjson.com/users')
             if(!response.ok) {
                 throw new Error('произошла ошибка загрузки!')
             }
             const data = await response.json()
-            setUsersInfo(data.users)
+            const initialUsers = sortUsers(data.users, config)
+            setUsersInfo(initialUsers)
+            localStorage.setItem('usersInfo', JSON.stringify(initialUsers))
         }
         catch(err) {
             setError(err.message)
@@ -103,9 +123,12 @@ export default function Table() {
             if (!response.ok) throw new Error('Failed to add user')
             const createdUser = await response.json()
 
-            setUsersInfo(prev => [createdUser, ...prev])
-            // setSortConfig({ key: null, direction: null })
-            // setIsAddModalOpen(false) 
+            setUsersInfo(prev => {
+                const updated = [createdUser, ...prev]
+                const sorted = sortUsers(updated, sortConfig)
+                localStorage.setItem('usersInfo', JSON.stringify(sorted))
+                return sorted
+            })
         } 
         catch (err) { 
             setError(err.message) 
@@ -119,21 +142,19 @@ export default function Table() {
     // const handleCloseAddModal = () => setIsAddModalOpen(false)
 
     React.useEffect(() => {
-        loadUsers()
-    }, [])
-
-    React.useEffect(() => {
-        if (sortConfig.key && sortConfig.direction) {
-            loadUsers(sortConfig.key, sortConfig.direction)
-        } else if (sortConfig.direction === null) {
+        if (usersInfo.length === 0) {
             loadUsers()
         }
-    }, [sortConfig])
+    }, [])
 
     function handleReload() {
-        setSortConfig({key: null, direction: null})
+        const defaultSort = {key: null, direction: null}
+        setSortConfig(defaultSort)
+        localStorage.setItem('sortConfig', JSON.stringify(defaultSort))
         setSelectedIds([])
-        loadUsers()
+        localStorage.setItem('selectedIds', JSON.stringify([]))
+        localStorage.removeItem('usersInfo')
+        loadUsers(defaultSort)
     }
 
     function handleSort(key) {
@@ -149,8 +170,14 @@ export default function Table() {
                 direction = 'asc'
             }
         }
-        setSortConfig({key, direction})
-        console.log(sortConfig)
+        const newSortConfig = {key, direction}
+        setSortConfig(newSortConfig)
+        localStorage.setItem('sortConfig', JSON.stringify(newSortConfig))
+        setUsersInfo(prev => {
+            const sorted = sortUsers(prev, newSortConfig)
+            localStorage.setItem('usersInfo', JSON.stringify(sorted))
+            return sorted
+        })
     }
 
     if (loading && usersInfo.length === 0) return <h3>Loading...</h3>
@@ -176,7 +203,10 @@ export default function Table() {
                                     userInfo={user}/>))
             : <div className="empty-message">
                 <h2>Right now there is no users in database.</h2>
-                <button onClick={loadUsers}>Fetch new users <img src="public/fetch-new-users.svg" alt="icon of downloading" /></button>
+                <button onClick={loadUsers}>
+                    Fetch new users 
+                    <i className="fa-solid fa-download" style={{color: '#d12953'}}></i>
+                </button>
             </div>}
             {modalUser && <Modal userInfo={modalUser} onClose={() => setModalUser(null)}/>}
 

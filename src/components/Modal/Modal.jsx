@@ -19,7 +19,7 @@ export default function Modal({userInfo, onClose}) {
     <div className={`overlay ${isOpen ? '' : 'overlay-hidden'}`} onClick={handleClose}>
         <div className={`modal ${isOpen ? '' : 'modal-hidden'}`} onClick={(e) => e.stopPropagation()}>
             <button className="close-btn" onClick={handleClose}>
-                <img src="public/close-btn.svg" alt="close modal button" />
+                <i className="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
 
             <div className="user-info-details">

@@ -39,18 +39,32 @@ body {
     border: 1px solid #ccc;
 }
 
-#search-icon, #filter-icon {
-    width: 20px;
+/* иконки фильтра и поиска */
+#filter-icon,
+#search-icon {
+    font-size: 16px;
+}
+
+/* цвета для иконок */
+#filter-icon {
+    color: #464F60;
+}
+
+#search-icon {
+    color: #868FA0;
+    margin-left: 8px;
 }
 
 .search-field {
     display: flex;
+    align-items: center;
     border: 1px solid black;
-    padding: 6px 12px;
+    /* padding: 6px 12px; */
     border-radius: 6px;
     background-color: white;
     border: 2px solid #ababab;
     transition: all ease 0.3ms;
+    /* height: 40px; */
 }
 
 .search-field:hover {
@@ -61,10 +75,14 @@ body {
 .filter-btn, .add-new-user-btn, .remove-btn, .reload-page-btn {
     border-radius: 6px;
     cursor: pointer;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .filter-btn, .remove-btn, .reload-page-btn {
-    padding: 8px 12px;
+    padding: 0 12px;
     background-color: white;
     border: 2px solid #ababab;
     transition: all ease 0.3ms;
@@ -76,8 +94,20 @@ body {
     transition: all ease 0.3ms;
 }
 
-.remove-btn img, .reload-page-btn img {
-    width: 16px;
+/* размеры и цвета иконок кнопок */
+.filter-btn i,
+.remove-btn i,
+.reload-page-btn i {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.remove-btn i {
+    color: #D12953;
+}
+
+.reload-page-btn i {
+    color: #868FA0;
 }
 
 .remove-block p{
@@ -90,7 +120,7 @@ body {
     background-color: #2264E5;
     border: none;
     box-shadow: 1px 1px 4px #2264E5;
-    padding: 8px 12px;
+    padding: 0 12px;
     transition: all ease 0.3ms;
 }
 
@@ -165,6 +195,9 @@ body {
     gap: 8px;
 }
 
-.sort-icon img {
-    width: 20px;
+.sort-icon i {
+    font-size: 18px;
+    line-height: 1;
+    margin-left: 4px;
 }
+
