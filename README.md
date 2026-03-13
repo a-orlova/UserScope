@@ -1,7 +1,5 @@
 ## User Management Dashboard
 
-https://user-dashboard-teal-five.vercel.app/
-
 react-приложение для управления данными пользователей с интерактивной таблицей. пользователи могут просматривать, сортировать, выбирать, добавлять и удалять записи. приложение получает тестовые данные с dummyjson.com (https://dummyjson.com/docs) и сохраняет изменения локально через localStorage
 
 стэк:
