@@ -24,14 +24,14 @@ react-приложение для управления данными польз
 - пагинация
 - все изменения сохраняются в localStorage и восстанавливаются после перезагрузки страницы
 
-<img width="2261" height="1355" alt="image" src="https://github.com/user-attachments/assets/fc53f506-154b-4d38-a4f6-e135fa00f319" />
+<img width="2209" height="1302" alt="image" src="https://github.com/user-attachments/assets/863bb527-43c6-4f76-a3fd-aad551e78375" />
+<img width="2191" height="1311" alt="image" src="https://github.com/user-attachments/assets/e3cc1e5e-c696-4af4-8778-a60bec25f790" />
+<img width="1366" height="492" alt="image" src="https://github.com/user-attachments/assets/a1b58fa1-9248-41e6-a297-56962948c846" />
+<img width="784" height="450" alt="image" src="https://github.com/user-attachments/assets/fe843eec-f2eb-4819-b7f4-c972dd7772e6" />
+<img width="979" height="1005" alt="image" src="https://github.com/user-attachments/assets/0ac6e82c-3d0a-4d8d-ad01-11dd399564e1" />
 
-<img width="1129" height="1022" alt="image" src="https://github.com/user-attachments/assets/b145b331-1c3a-4c5f-adef-77205871da02" />
 
-<img width="2188" height="763" alt="image" src="https://github.com/user-attachments/assets/a2cde723-f110-4834-b3a7-7f9cd192b19d" />
 
-<img width="1096" height="627" alt="image" src="https://github.com/user-attachments/assets/951d6f55-7d98-42e0-908c-5d1f168e18a1" />
 
-<img width="995" height="1124" alt="image" src="https://github.com/user-attachments/assets/89a8074e-4d9b-4e6e-93f0-2e02f57110f7" />
 
 
