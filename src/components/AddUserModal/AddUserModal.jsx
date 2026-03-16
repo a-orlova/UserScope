@@ -6,10 +6,8 @@ export default function AddUserModal({ isOpen, onClose, onAdd }) {
     const [formData, setFormData] = useState({
                                     firstName: '',
                                     lastName: '',
-                                    maidenName: '',
-                                    age: '',
                                     birthDate: '',
-                                    gender: 'male',
+                                    gender: '',
                                     phone: '',
                                     email: '',
                                     country: '',
@@ -50,6 +48,21 @@ export default function AddUserModal({ isOpen, onClose, onAdd }) {
             }
         }
 
+    function calculateAge(birthDate) {
+        const today = new Date()
+        const birth = new Date(birthDate)
+
+        let age = today.getFullYear() - birth.getFullYear()
+
+        const month = today.getMonth() - birth.getMonth()
+
+        if (month < 0 || ((month === 0 && today.getDate() < birth.getDate()))) {
+            age--
+        }
+
+        return age
+    }
+
     function handleSubmit(e) {
         e.preventDefault()
 
@@ -57,7 +70,10 @@ export default function AddUserModal({ isOpen, onClose, onAdd }) {
 
         const newUser = {
             ...formData,
-            age: Number(formData.age),
+            company: {
+                title: formData.career || '-'
+            },
+            age: calculateAge(formData.birthDate),
             birthDate: formData.birthDate,
             height: formData.height ? Number(formData.height) : null,
             weight: formData.weight ? Number(formData.weight) : null,
@@ -88,12 +104,8 @@ export default function AddUserModal({ isOpen, onClose, onAdd }) {
                     <input name="lastName" value={formData.lastName} onChange={handleChange} required />
                 </div>
                 <div>
-                    <label>Maiden Name</label>
-                    <input name="maidenName" value={formData.maidenName} onChange={handleChange} />
-                </div>
-                <div>
-                    <label>Age *</label>
-                    <input type="number" name="age" value={formData.age} onChange={handleChange} required />
+                    <label>Career</label>
+                    <input name="career" value={formData.career} onChange={handleChange} />
                 </div>
                 <div>
                     <label>Date of birth *</label>
