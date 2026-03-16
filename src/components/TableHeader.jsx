@@ -15,7 +15,8 @@ export default function TableHeader({onAddClick,
                                     onWebFilter,
                                     femFltr,
                                     maleFltr,
-                                    webFltr}) {
+                                    webFltr,
+                                    onResetFilters}) {
 
     const columns = [
         { label: 'First Name', sortKey: 'firstName' },
@@ -66,6 +67,12 @@ export default function TableHeader({onAddClick,
                     <button className={webFltr ? "filter-btn fltr active" : "filter-btn fltr"}  onClick={onWebFilter}>
                         Web developer <i className="fa-solid fa-filter" id="filter-icon" aria-hidden="true"></i>
                     </button>
+
+                    {femFltr || maleFltr || webFltr ?
+                        <button className="filter-btn fltr reset-btn" onClick={onResetFilters}>
+                            Reset filters
+                        </button>
+                        : ''}
 
                     {selectedIds.length > 0 ? 
                     <div className="remove-block">

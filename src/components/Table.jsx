@@ -32,19 +32,34 @@ export default function Table() {
     const [femFltr, setFemFltr] = React.useState(false)
 
     function handleFemaleFilter() {
-        setFemFltr(prev => !prev)
+        setFemFltr(prev => {
+            const next = !prev
+            if (next) setMaleFltr(false)
+            return next
+        })
     }
 
     const [maleFltr, setMaleFltr] = React.useState(false)
 
     function handleMaleFilter() {
-        setMaleFltr(prev => !prev)
+        setMaleFltr(prev => {
+            const next = !prev
+            if (next) setFemFltr(false)
+            return next
+        })
     }
 
     const [webFltr, setWebFltr] = React.useState(false)
 
     function handleWebFilter() {
         setWebFltr(prev => !prev)
+    }
+
+    function resetFilters() {
+        setFemFltr(false)
+        setMaleFltr(false)
+        setWebFltr(false)
+        setSearchQuery('')
     }
 
     const filteredUsers = React.useMemo(() => {
@@ -82,9 +97,13 @@ export default function Table() {
             })
         }
 
+        if (sortConfig.direction) {
+            result = sortUsers(result, sortConfig)
+        }
+        
         return result
 
-      }, [usersInfo, searchQuery, femFltr, maleFltr, webFltr])
+      }, [usersInfo, searchQuery, femFltr, maleFltr, webFltr, sortConfig])
 
     function sortUsers(users, config) {
         if (!config || !config.key || !config.direction) return users
@@ -232,11 +251,6 @@ export default function Table() {
         const newSortConfig = {key, direction}
         setSortConfig(newSortConfig)
         localStorage.setItem('sortConfig', JSON.stringify(newSortConfig))
-        setUsersInfo(prev => {
-            const sorted = sortUsers(prev, newSortConfig)
-            localStorage.setItem('usersInfo', JSON.stringify(sorted))
-            return sorted
-        })
     }
 
     if (loading && usersInfo.length === 0) return <h3 className="loading">Loading...</h3>
@@ -248,6 +262,7 @@ export default function Table() {
                 femFltr={femFltr}
                 maleFltr={maleFltr}
                 webFltr={webFltr}
+                onResetFilters={resetFilters}
 
                 onFemaleFilter={handleFemaleFilter}
                 onMaleFilter={handleMaleFilter}

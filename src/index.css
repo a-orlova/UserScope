@@ -214,6 +214,10 @@ header button {
     color: var(--color-text-main);
 }
 
+.reset-btn {
+    border: none;
+}
+
 .active {
     border: 2px solid var(--color-text-main);
 }
