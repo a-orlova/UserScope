@@ -153,7 +153,7 @@ export default function Table() {
         setError(null)
 
         try {
-            const response = await fetch('https://dummyjson.com/users?limit=100')
+            const response = await fetch('https://dummyjson.com/users?limit=200')
             if(!response.ok) {
                 throw new Error('произошла ошибка загрузки!')
             }
@@ -239,7 +239,7 @@ export default function Table() {
         })
     }
 
-    if (loading && usersInfo.length === 0) return <h3>Loading...</h3>
+    if (loading && usersInfo.length === 0) return <h3 className="loading">Loading...</h3>
     if (error) return <h3>Error: {error}</h3>
 
     return (
@@ -268,7 +268,7 @@ export default function Table() {
             {usersInfo.length === 0 ? (
                 <div className="empty-message">
                     <h2>Right now there is no users in database.</h2>
-                    <button onClick={loadUsers}>
+                    <button className="new-users-btn" onClick={loadUsers}>
                         Fetch new users 
                         <i className="fa-solid fa-download" style={{color: '#d12953'}}></i>
                     </button>
@@ -276,7 +276,7 @@ export default function Table() {
             ) : filteredUsers.length === 0 && searchQuery.trim() ? (
                 <div className="empty-message">
                     <h2>No users found for this search.</h2>
-                    <button onClick={() => setSearchQuery('')}>
+                    <button className="new-users-btn" onClick={() => setSearchQuery('')}>
                         Clear search
                         <i className="fa-solid fa-xmark" style={{color: '#d12953', marginLeft: '8px'}}></i>
                     </button>

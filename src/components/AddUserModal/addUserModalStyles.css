@@ -22,10 +22,10 @@
     flex-direction: column;
     width: 600px;
     height: 720px;
-    border: 2px solid #363031;
+    border: 2px solid var(--color-border);
     border-radius: 10px;
-    background-color: #E9EDF5;
-    color: #464F60;
+    background-color: var(--color-header-bg);
+    color: var(--color-icon-filter);
     position: relative;
     padding: 15px;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -57,7 +57,7 @@ label {
 
 input, select {
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border);
     border-radius: 4px;
 }
 
@@ -76,24 +76,24 @@ input, select {
     align-items: center;
     justify-content: center;
     color: white;
-    background-color: #2264E5;
+    background-color: var(--color-btn-primary);
     border: none;
-    box-shadow: 1px 1px 4px #2264E5;
+    box-shadow: 1px 1px 4px var(--color-btn-primary);
     padding: 0 12px;
     transition: all ease 0.3ms;
     font-weight: bolder;
 }
 
 .modal-actions button:hover {
-    background-color: #1952c5;
+    background-color: var(--color-btn-primary-hover);
     transform: scaleY(1.02);
     transition: all ease 0.3ms;
 }
 
 .modal-actions button[type="button"] {
-    background: #ccc;
-    color: #464F60;
-    border: 2px solid #ababab;
+    background: var(--color-border);
+    color: var(--color-icon-filter);
+    border: 2px solid var(--color-border-input);
     box-shadow: none;
     transition: none;
 }

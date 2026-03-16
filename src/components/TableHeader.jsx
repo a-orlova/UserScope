@@ -69,7 +69,7 @@ export default function TableHeader({onAddClick,
 
                     {selectedIds.length > 0 ? 
                     <div className="remove-block">
-                        <p>Remove {isAllSelected ? 'all' : selectedIds.length} {selectedIds.length === 1 ? 'item' : 'items'} ? </p> 
+                        <p className='remove'>Remove {isAllSelected ? 'all' : selectedIds.length} {selectedIds.length === 1 ? 'item' : 'items'} ? </p> 
                         <button className="remove-btn" onClick={onDeleteSelected}>
                             <i className="fa-solid fa-trash" aria-hidden="true"></i>
                         </button>

@@ -2,10 +2,10 @@
     display: flex;
     max-width: 500px;
     max-height: 400px;
-    border: 2px solid #363031;
+    border: 2px solid var(--color-border);
     border-radius: 10px;
-    background-color: #E9EDF5;
-    color: #464F60;
+    background-color: var(--color-header-bg);
+    color: var(--color-icon-filter);
     position: relative;
     padding-bottom: 15px;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -29,7 +29,7 @@
 }
 
 .users-photo {
-    border: 2px solid #D12953;
+    border: 2px solid var(--color-icon-remove);
     border-radius: 50%;
     width: 180px;
 }
@@ -40,12 +40,12 @@
 
 .feature {
     margin: 10px 0 3px 5px;
-    color: #171C26;
+    color: var(--color-text-main);
     font-weight: bold;
 }
 
 .feature span {
-    color: #464F60;
+    color: var(--color-icon-filter);
     font-weight: normal;
 }
 
@@ -54,9 +54,8 @@
     position: absolute;
     right: 0;
     margin: 7px 7px 0 0;
-    background-color: white;
-    background-color: white;
-    border: 2px solid #ababab;
+    background-color: var(--main-color-bg);
+    border: 2px solid var(--color-border-input);
     border-radius: 6px;
     transition: all ease 0.3ms;
     cursor: pointer;
@@ -66,7 +65,7 @@
 }
 
 .close-btn:hover {
-    background-color: rgb(232, 232, 232);
+    background-color: var(--hover-color-btn);
     transform: scaleY(1.02);
     transition: all ease 0.3ms;
 }
@@ -74,7 +73,7 @@
 .close-btn i {
     font-size: 16px;
     line-height: 1;
-    color: #D12953;
+    color: var(--color-female-text);
 }
 
 .overlay {
@@ -95,43 +94,3 @@
     opacity: 0;
     pointer-events: none;
 }
-
-/* сообщение при удалении всех пользователей */
-
-.empty-message {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-top: none;
-    border: 1px solid #ccc;
-    padding-bottom: 30px;
-    border-bottom-left-radius: 8px ;
-    border-bottom-right-radius: 8px ;
-}
-
-.empty-message button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #14804A;
-    font-weight: bold;
-    background-color: #E1FCEF;
-    font-size: 16px;
-    border: none;
-    border-radius: 10px;
-    width: 200px;
-    cursor: pointer;
-    padding: 5px;
-}
-
-.empty-message button:hover {
-    border: 2px solid #14804A;
-    background-color: #c6e9d8;
-}
-
-.empty-message i {
-    font-size: 20px;
-    margin-right: 8px;
-    color: #D12953;
-}
-
