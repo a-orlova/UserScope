@@ -31,6 +31,9 @@ export default function Table() {
 
     const [femFltr, setFemFltr] = React.useState(false)
 
+    const [currentPage, setCurrentPage] = React.useState(1)
+    const [usersPerPage] = React.useState(10)
+
     function handleFemaleFilter() {
         setFemFltr(prev => {
             const next = !prev
@@ -105,6 +108,19 @@ export default function Table() {
 
       }, [usersInfo, searchQuery, femFltr, maleFltr, webFltr, sortConfig])
 
+    const indexOfLastUser = currentPage * usersPerPage
+    const indexOfFirstUser = indexOfLastUser - usersPerPage
+    const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser)
+    const totalPages = Math.ceil(filteredUsers.length / usersPerPage)
+
+    function goToPage(pageNumber) {
+        setCurrentPage(pageNumber)
+    }
+
+    React.useEffect(() => {
+        setCurrentPage(1)
+    }, [searchQuery, femFltr, maleFltr, webFltr])
+
     function sortUsers(users, config) {
         if (!config || !config.key || !config.direction) return users
 
@@ -172,7 +188,7 @@ export default function Table() {
         setError(null)
 
         try {
-            const response = await fetch('https://dummyjson.com/users?limit=200')
+            const response = await fetch('https://dummyjson.com/users?limit=100')
             if(!response.ok) {
                 throw new Error('произошла ошибка загрузки!')
             }
@@ -257,63 +273,77 @@ export default function Table() {
     if (error) return <h3>Error: {error}</h3>
 
     return (
-        <div className="table">
-            <TableHeader 
-                femFltr={femFltr}
-                maleFltr={maleFltr}
-                webFltr={webFltr}
-                onResetFilters={resetFilters}
+        <>
+            <div className="table">
+                <TableHeader 
+                    femFltr={femFltr}
+                    maleFltr={maleFltr}
+                    webFltr={webFltr}
+                    onResetFilters={resetFilters}
 
-                onFemaleFilter={handleFemaleFilter}
-                onMaleFilter={handleMaleFilter}
-                onWebFilter={handleWebFilter}
+                    onFemaleFilter={handleFemaleFilter}
+                    onMaleFilter={handleMaleFilter}
+                    onWebFilter={handleWebFilter}
 
-                onSort={handleSort}
-                onSearchChange={setSearchQuery}
-                onAddClick={handleOpenAddModal}
-                onReload={handleReload}
-                onToggleAll={onToggleAll} 
-                onDeleteSelected={handleDeleteSelected}
-                isAllSelected={isAllSelected}
+                    onSort={handleSort}
+                    onSearchChange={setSearchQuery}
+                    onAddClick={handleOpenAddModal}
+                    onReload={handleReload}
+                    onToggleAll={onToggleAll} 
+                    onDeleteSelected={handleDeleteSelected}
+                    isAllSelected={isAllSelected}
 
-                searchQuery={searchQuery}
-                sortConfig={sortConfig} 
-                selectedIds={selectedIds}
-            />
-            {usersInfo.length === 0 ? (
-                <div className="empty-message">
-                    <h2>Right now there is no users in database.</h2>
-                    <button className="new-users-btn" onClick={loadUsers}>
-                        Fetch new users 
-                        <i className="fa-solid fa-download" style={{color: '#d12953'}}></i>
+                    searchQuery={searchQuery}
+                    sortConfig={sortConfig} 
+                    selectedIds={selectedIds}
+                />
+                {usersInfo.length === 0 ? (
+                    <div className="empty-message">
+                        <h2>Right now there is no users in database.</h2>
+                        <button className="new-users-btn" onClick={loadUsers}>
+                            Fetch new users 
+                            <i className="fa-solid fa-download" style={{color: '#d12953'}}></i>
+                        </button>
+                    </div>
+                ) : filteredUsers.length === 0 && searchQuery.trim() ? (
+                    <div className="empty-message">
+                        <h2>No users found for this search.</h2>
+                        <button className="new-users-btn" onClick={() => setSearchQuery('')}>
+                            Clear search
+                            <i className="fa-solid fa-xmark" style={{color: '#d12953', marginLeft: '8px'}}></i>
+                        </button>
+                    </div>
+                ) : (
+                    currentUsers.map(user => (
+                        <TableRow 
+                            onRowClick={() => handleRowClick(user)}
+                            onToggle={() => handleToggleRow(user.id)} 
+                            isSelected={selectedIds.includes(user.id)} 
+                            key={user.id} 
+                            userInfo={user}
+                        />
+                    ))
+                )}
+                {modalUser && <Modal userInfo={modalUser} onClose={() => setModalUser(null)}/>}
+
+                {isAddModalOpen && (<AddUserModal
+                                        isOpen={isAddModalOpen}
+                                        onClose={() => setIsAddModalOpen(false)}
+                                        onAdd={handleAddUser}
+                                    />)}
+            </div>
+
+            <div className="pagination">
+                {Array.from({ length: totalPages }, (_, i) => (
+                    <button
+                        key={i}
+                        onClick={() => goToPage(i + 1)}
+                        className={currentPage === i + 1 ? "active" : ""}
+                    >
+                        {i + 1}
                     </button>
-                </div>
-            ) : filteredUsers.length === 0 && searchQuery.trim() ? (
-                <div className="empty-message">
-                    <h2>No users found for this search.</h2>
-                    <button className="new-users-btn" onClick={() => setSearchQuery('')}>
-                        Clear search
-                        <i className="fa-solid fa-xmark" style={{color: '#d12953', marginLeft: '8px'}}></i>
-                    </button>
-                </div>
-            ) : (
-                filteredUsers.map(user => (
-                    <TableRow 
-                        onRowClick={() => handleRowClick(user)}
-                        onToggle={() => handleToggleRow(user.id)} 
-                        isSelected={selectedIds.includes(user.id)} 
-                        key={user.id} 
-                        userInfo={user}
-                    />
-                ))
-            )}
-            {modalUser && <Modal userInfo={modalUser} onClose={() => setModalUser(null)}/>}
-
-            {isAddModalOpen && (<AddUserModal
-                                    isOpen={isAddModalOpen}
-                                    onClose={() => setIsAddModalOpen(false)}
-                                    onAdd={handleAddUser}
-                                />)}
-        </div>
+                ))}
+            </div>
+        </>
     )
 }
